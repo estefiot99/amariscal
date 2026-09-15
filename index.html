@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alvaro Mariscal — Renders arquitectónicos</title>
+    <meta
+      name="description"
+      content="Alvaro Mariscal, artista 3D en Monterrey. Renders arquitectónicos fotorrealistas en Twinmotion y Corona. El portafolio está en construcción."
+    />
+    <meta
+      property="og:title"
+      content="Alvaro Mariscal — Renders arquitectónicos"
+    />
+    <meta
+      property="og:description"
+      content="Renders arquitectónicos fotorrealistas. Monterrey, México. Portafolio en construcción."
+    />
+    <meta property="og:locale" content="es_MX" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --yeso: #d9d6ce;
+        --yeso-luz: #efede6;
+        --sombra: #a9a59a;
+        --tinta: #23241f;
+        --pigmento: #2c4ca3;
+
+        --margen: 6vmin;
+        --barrido: cubic-bezier(0.16, 0.84, 0.34, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        min-height: 100svh;
+        background: var(--yeso);
+        color: var(--tinta);
+        font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+        font-variation-settings:
+          'wdth' 100,
+          'wght' 400;
+        font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      /* ---- el muro ----------------------------------------------------- */
+
+      .muro {
+        position: relative;
+        min-height: 100svh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 2rem;
+        padding: var(--margen);
+        isolation: isolate;
+      }
+
+      .muro::before,
+      .muro::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      /* luz entrando por un vano alto a la izquierda */
+      .muro::before {
+        background:
+          linear-gradient(
+            103deg,
+            var(--yeso-luz) 0%,
+            var(--yeso-luz) 46%,
+            rgba(239, 237, 230, 0) 46.4%
+          ),
+          linear-gradient(
+            103deg,
+            rgba(255, 255, 255, 0) 60%,
+            rgba(169, 165, 154, 0.55) 100%
+          );
+        clip-path: polygon(0 0, 78% 0, 46% 100%, 0 100%);
+        transform-origin: 0 0;
+        animation: proyectar 2.4s var(--barrido) both;
+      }
+
+      /* el quiebre del cancel dentro de la luz */
+      .muro::after {
+        background: linear-gradient(
+          103deg,
+          rgba(35, 36, 31, 0) 0 39.4%,
+          rgba(35, 36, 31, 0.13) 39.4% 40.4%,
+          rgba(35, 36, 31, 0) 40.4%
+        );
+        clip-path: polygon(0 0, 78% 0, 46% 100%, 0 100%);
+        animation: proyectar 2.4s var(--barrido) both;
+      }
+
+      @keyframes proyectar {
+        from {
+          transform: translate3d(-14%, 0, 0) scaleX(0.82);
+          opacity: 0;
+        }
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+
+      /* ---- encabezado -------------------------------------------------- */
+
+      .firma {
+        display: flex;
+        align-items: baseline;
+        gap: 0.9rem;
+        font-variation-settings:
+          'wdth' 118,
+          'wght' 500;
+        letter-spacing: 0.01em;
+      }
+      .firma .glifo {
+        font-size: 1.05rem;
+        border: 1px solid var(--tinta);
+        width: 1.85rem;
+        height: 1.85rem;
+        display: grid;
+        place-items: center;
+        align-self: center;
+        line-height: 1;
+      }
+      .firma .lugar {
+        font-variation-settings:
+          'wdth' 100,
+          'wght' 400;
+        color: #5d5d55;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+
+      .retrato {
+        max-width: 450px;
+        filter: grayscale(1) contrast(1.08) brightness(1.04);
+      }
+
+      .container {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      /* ---- el nombre --------------------------------------------------- */
+
+      main {
+        align-self: end;
+        max-width: 24ch;
+      }
+
+      h1 {
+        font-variation-settings:
+          'wdth' 125,
+          'wght' 500;
+        font-size: clamp(2.75rem, 12.5vw, 9rem);
+        line-height: 0.9;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
+      }
+      h1 .nombre {
+        display: block;
+        color: #4a4a42;
+      }
+
+      .oficio {
+        margin-top: clamp(0.9rem, 2vw, 1.35rem);
+        font-variation-settings:
+          'wdth' 112,
+          'wght' 400;
+        font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+        line-height: 1.3;
+        max-width: 26ch;
+      }
+
+      .regla {
+        height: 1px;
+        background: var(--tinta);
+        opacity: 0.35;
+        margin: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(1rem, 2vw, 1.4rem);
+        max-width: min(46ch, 100%);
+      }
+
+      .aviso {
+        max-width: 38ch;
+        color: #43443c;
+      }
+      .aviso strong {
+        font-variation-settings:
+          'wdth' 100,
+          'wght' 500;
+        font-weight: inherit;
+        color: var(--tinta);
+      }
+
+      /* ---- pie --------------------------------------------------------- */
+
+      footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1.25rem 2rem;
+        color: #5d5d55;
+      }
+
+      .contacto {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.55rem 1.25rem;
+      }
+
+      a {
+        color: var(--pigmento);
+        text-decoration: none;
+        box-shadow: inset 0 -1px 0 rgba(44, 76, 163, 0.35);
+        transition:
+          box-shadow 0.18s ease,
+          color 0.18s ease;
+      }
+      a:hover {
+        box-shadow: inset 0 -2px 0 var(--pigmento);
+      }
+      a:focus-visible {
+        outline: 2px solid var(--pigmento);
+        outline-offset: 3px;
+        box-shadow: none;
+        border-radius: 2px;
+      }
+
+      .copiar {
+        font: inherit;
+        color: #5d5d55;
+        background: none;
+        border: 1px solid rgba(35, 36, 31, 0.28);
+        border-radius: 2px;
+        padding: 0.2rem 0.6rem;
+        cursor: pointer;
+        transition:
+          border-color 0.18s ease,
+          color 0.18s ease;
+      }
+      .copiar:hover {
+        border-color: var(--tinta);
+        color: var(--tinta);
+      }
+      .copiar:focus-visible {
+        outline: 2px solid var(--pigmento);
+        outline-offset: 3px;
+      }
+      .copiar[data-estado='listo'] {
+        border-color: var(--pigmento);
+        color: var(--pigmento);
+      }
+
+      .estado {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .estado .punto {
+        width: 6px;
+        height: 6px;
+        background: var(--pigmento);
+        border-radius: 50%;
+        flex: none;
+      }
+
+      @media (max-width: 1280px) {
+        h1 {
+          font-size: 80px;
+        }
+      }
+
+      @media (max-width: 991px) {
+        h1 {
+          font-size: 60px;
+        }
+        .retrato {
+          max-width: 360px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .container {
+          flex-direction: column-reverse;
+          gap: 24px;
+        }
+        .retrato {
+          max-width: 100%;
+        }
+        main {
+          max-width: none;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        :root {
+          --margen: 7vmin;
+        }
+        .muro::before,
+        .muro::after {
+          clip-path: polygon(0 0, 96% 0, 58% 100%, 0 100%);
+        }
+        main {
+          max-width: none;
+        }
+        footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        header {
+          align-items: center;
+        }
+        .firma {
+          flex-wrap: wrap;
+          row-gap: 0.3rem;
+        }
+        .firma .lugar {
+          flex-basis: 100%;
+          margin-left: calc(1.85rem + 0.9rem);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .muro::before,
+        .muro::after {
+          animation: none;
+        }
+        * {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="muro">
+      <header>
+        <p class="firma">
+          <span class="glifo" aria-hidden="true">AM</span>
+          <span>Renders arquitectónicos</span>
+          <span class="lugar">Monterrey, México</span>
+        </p>
+      </header>
+
+      <div class="container">
+        <main>
+          <h1><span class="nombre">Alvaro</span>Mariscal</h1>
+
+          <p class="oficio">
+            Imágenes fotorrealistas de proyectos. Twinmotion y Corona.
+          </p>
+
+          <div class="regla" role="presentation"></div>
+
+          <p class="aviso">
+            Estoy armando el portafolio.
+            <strong
+              >Pronto vas a encontrar aquí los proyectos completos: vivienda,
+              interiores y espacios comerciales.</strong
+            >
+            Mientras tanto, el trabajo reciente está en Instagram.
+          </p>
+        </main>
+        <picture>
+          <source
+            media="(max-width: 767px)"
+            srcset="assets/images/square.png"
+          />
+          <img
+            class="retrato"
+            src="assets/images/vertical.png"
+            alt="Retrato de Alvaro Mariscal"
+          />
+        </picture>
+      </div>
+
+      <footer>
+        <div class="contacto">
+          <a href="mailto:designbyamariscal@gmail.com"
+            >designbyamariscal@gmail.com</a
+          >
+          <a href="https://www.instagram.com/designbyamariscal" rel="noopener"
+            >@designbyamariscal</a
+          >
+        </div>
+
+        <p class="estado">
+          <span class="punto" aria-hidden="true"></span> Disponible para
+          proyectos freelance en LATAM
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const boton = document.querySelector('.copiar');
+      const etiqueta = boton.textContent;
+      let reloj;
+
+      boton.addEventListener('click', async () => {
+        const correo = boton.dataset.correo;
+        try {
+          await navigator.clipboard.writeText(correo);
+          boton.textContent = 'Copiado';
+        } catch {
+          boton.textContent = correo;
+        }
+        boton.dataset.estado = 'listo';
+        clearTimeout(reloj);
+        reloj = setTimeout(() => {
+          boton.textContent = etiqueta;
+          delete boton.dataset.estado;
+        }, 2200);
+      });
+    </script>
+  </body>
+</html>
